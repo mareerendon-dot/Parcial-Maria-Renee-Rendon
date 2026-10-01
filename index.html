@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nebula Coffee ☕</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0b0710;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* Fondo */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      background: #8b5cf6;
+      filter: blur(180px);
+      opacity: 0.25;
+      top: -150px;
+      left: -150px;
+      z-index: -1;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      background: #ec4899;
+      filter: blur(180px);
+      opacity: 0.18;
+      bottom: -150px;
+      right: -150px;
+      z-index: -1;
+    }
+
+    /* Navegación */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(11, 7, 16, 0.65);
+      backdrop-filter: blur(15px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #c084fc;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      color: #ddd;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #c084fc;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px 60px;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 16px;
+      border: 1px solid rgba(192,132,252,0.4);
+      border-radius: 50px;
+      color: #d8b4fe;
+      background: rgba(139,92,246,0.1);
+      margin-bottom: 25px;
+      font-size: 0.9rem;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 0.95;
+      margin-bottom: 25px;
+      background: linear-gradient(90deg, #fff, #c084fc, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: #aaa;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .buttons {
+      margin-top: 35px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 14px 25px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      color: white;
+      box-shadow: 0 10px 30px rgba(139,92,246,0.3);
+    }
+
+    .primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(236,72,153,0.4);
+    }
+
+    .secondary {
+      color: white;
+      border: 1px solid #444;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .secondary:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* Secciones */
+    section {
+      padding: 100px 8%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #888;
+    }
+
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .card {
+      padding: 30px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      transition: 0.35s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(192,132,252,0.5);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: #999;
+      line-height: 1.6;
+    }
+
+    .price {
+      display: block;
+      margin-top: 20px;
+      color: #d8b4fe;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    /* CTA */
+    .cta {
+      max-width: 1000px;
+      margin: auto;
+      padding: 70px 30px;
+      text-align: center;
+      border-radius: 30px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(139,92,246,0.2),
+          rgba(236,72,153,0.12)
+        );
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .cta h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .cta p {
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    /* Footer */
+    footer {
+      padding: 30px;
+      text-align: center;
+      color: #666;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      nav ul {
+        display: none;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 80px 6%;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="logo">☕ <span>Nebula</span> Coffee</div>
+
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#experiencia">Experiencia</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+
+      <div class="badge">
+        ✨ Café fuera de este mundo
+      </div>
+
+      <h1>
+        Despierta<br>
+        tu universo.
+      </h1>
+
+      <p>
+        Café de especialidad, sabores únicos y un espacio diseñado
+        para que cada taza se convierta en una pequeña aventura.
+      </p>
+
+      <div class="buttons">
+        <a href="#menu" class="btn primary">
+          Ver menú ☕
+        </a>
+
+        <a href="#experiencia" class="btn secondary">
+          Descubrir más
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MENÚ -->
+  <section id="menu">
+
+    <div class="section-title">
+      <h2>Nuestro menú</h2>
+      <p>Pequeñas obras de arte en una taza.</p>
+    </div>
+
+    <div class="cards">
+
+      <div class="card">
+        <div class="icon">☕</div>
+        <h3>Cosmic Latte</h3>
+        <p>
+          Espresso intenso combinado con leche cremosa
+          y un toque de vainilla.
+        </p>
+        <span class="price">$4.50</span>
+      </div>
+
+      <div class="card">
+        <div class="icon">🌌</div>
+        <h3>Nebula Cold Brew</h3>
+        <p>
+          Cold brew de extracción lenta con notas de
+          chocolate oscuro y frutos rojos.
+        </p>
+        <span class="price">$5.00</span>
+      </div>
+
+      <div class="card">
+        <div class="icon">🍫</div>
+        <h3>Black Hole Mocha</h3>
+        <p>
+          Espresso, chocolate artesanal y espuma de leche
+          para los amantes de los sabores intensos.
+        </p>
+        <span class="price">$5.50</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCIA -->
+  <section id="experiencia">
+
+    <div class="section-title">
+      <h2>Una experiencia diferente</h2>
+      <p>No solo servimos café.</p>
+    </div>
+
+    <div class="cards">
+
+      <div class="card">
+        <div class="icon">🌱</div>
+        <h3>Granos seleccionados</h3>
+        <p>
+          Trabajamos con café de especialidad cuidadosamente
+          seleccionado.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🎧</div>
+        <h3>Ambiente</h3>
+        <p>
+          Música, iluminación y diseño pensados para trabajar,
+          conversar o simplemente desconectar.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🚀</div>
+        <h3>Siempre algo nuevo</h3>
+        <p>
+          Cada temporada exploramos nuevos sabores y
+          combinaciones.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contacto">
+
+    <div class="cta">
+      <h2>¿Listo para despegar?</h2>
+
+      <p>
+        Ven a visitarnos y descubre tu próximo café favorito.
+      </p>
+
+      <button class="btn primary" onclick="reservar()">
+        Reservar una mesa 🚀
+      </button>
+    </div>
+
+  </section>
+
+  <footer>
+    © 2026 Nebula Coffee · Hecho con ☕ y código
+  </footer>
+
+  <script>
+    function reservar() {
+      alert(
+        "🚀 ¡Genial! Tu mesa ha sido solicitada. " +
+        "Pronto recibirás una confirmación."
+      );
+    }
+
+    // Pequeña animación al hacer scroll
+    const cards = document.querySelectorAll(".card");
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    cards.forEach(card => {
+      card.style.opacity = "0";
+      card.style.transform = "translateY(30px)";
+      card.style.transition =
+        "opacity 0.6s ease, transform 0.6s ease";
+
+      observer.observe(card);
+    });
+  </script>
+
+</body>
+</html>
